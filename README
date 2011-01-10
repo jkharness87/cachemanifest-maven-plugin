@@ -22,12 +22,22 @@ Cantina doesn't have a public artifactory yet - to use it, you'll need to:
                 <version>1.0</version>
                 <configuration>
                     <manifestVersion>1</manifestVersion>
-                    <inputDirectory>${basedir}/src/main/webapp</inputDirectory>
                     <outputManifestFile>${basedir}/src/main/webapp/cache.manifest</outputManifestFile>
-                    <excludes>
-                        <exclude>WEB-INF/**</exclude>
-                        <exclude>**/*.manifest</exclude>
-                    </excludes>
+		    <cacheItems>
+                        <cacheItem>
+                    	    <inputDirectory>${basedir}/src/main/webapp</inputDirectory>
+			    <!-- Optional web application context name that will be prepended to the resources in the manifest file -->
+                            <applicationContextName>webappname</applicationContextName>
+                    	    <excludes>
+                        	<exclude>WEB-INF/**</exclude>
+                        	<exclude>**/*.manifest</exclude>
+                    	    </excludes>
+                            <dynamicResources>
+				<!-- Contrived  example of dynamically generated content from database but worth caching since it doesn't change often -->
+                                <dynamicResource>api/listOfStates.do</dynamicResource>
+                            </dynamicResources>
+                        </cacheItem>
+		    </cacheItems>
                     <networkResources>
                         <!-- whitelist all non-cached references to allow Web services access -->
                         <networkResource>*</networkResource>
